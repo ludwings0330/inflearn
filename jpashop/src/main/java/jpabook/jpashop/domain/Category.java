@@ -3,6 +3,7 @@ package jpabook.jpashop.domain;
 import jpabook.jpashop.domain.item.Item;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class Category {
 
     private String name;
 
+    @BatchSize(size = 1000)
     @ManyToMany
     @JoinTable(name = "category_item",
             joinColumns = @JoinColumn(name = "category_id"),
@@ -29,6 +31,7 @@ public class Category {
     private Category parent;
 
     @OneToMany(mappedBy = "parent")
+    @BatchSize(size = 1000)
     private List<Category> child = new ArrayList<>();
 
     public void addChildCategory(Category child) {

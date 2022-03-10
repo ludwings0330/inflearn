@@ -4,6 +4,7 @@ import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.order.Order;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Member {
     @Embedded
     Address address;
 
+    @BatchSize(size = 1000)
     @OneToMany(mappedBy = "member")
     List<Order> orders = new ArrayList<>();
 }

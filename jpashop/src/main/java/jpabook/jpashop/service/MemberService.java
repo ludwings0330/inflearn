@@ -22,6 +22,12 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
+    @Transactional
+    public void update(Long id, String name) {
+        final Member member = memberRepository.findOne(id);
+        member.setName(name);
+    }
+
     private void validateDuplicateMember(Member member) {
         final List<Member> findMembers = memberRepository.findByName(member.getName());
 

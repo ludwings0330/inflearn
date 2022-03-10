@@ -4,6 +4,7 @@ import jpabook.jpashop.domain.Category;
 import jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public abstract class Item {
     private int price;
     private int stockQuantity;
 
+    @BatchSize(size = 1000)
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
 
