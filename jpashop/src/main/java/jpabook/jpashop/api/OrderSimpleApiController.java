@@ -2,6 +2,7 @@ package jpabook.jpashop.api;
 
 import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.order.Order;
+import jpabook.jpashop.domain.order.OrderItem;
 import jpabook.jpashop.domain.order.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import lombok.Data;
@@ -20,6 +21,19 @@ public class OrderSimpleApiController {
 
     private final OrderRepository orderRepository;
     private final OrderSimpleQueryRepository orderSimpleQueryRepository;
+
+    @GetMapping("/api/v1/simple-orders")
+    public List<Order> ordersV1() {
+        final List<Order> orders = orderRepository.findAll();
+
+        for (Order order :
+                orders) {
+            order.getMember().getName(); // LAZY 강제 로딩
+            order.getDelivery().getAddress(); // LAZY 강제 로딩
+        }
+
+        return orders;
+    }
 
     @GetMapping("/api/v2/simple-orders")
     public List<SimpleOrderDto> ordersV2() {
